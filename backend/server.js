@@ -7,6 +7,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+// Import error handler middleware
+const { errorHandler } = require("./middleware/errorMiddleware");
+
 // Import routes
 const userRoutes = require("./routes/userRoutes");
 
@@ -28,6 +31,9 @@ app.use("/api/users", userRoutes);
 app.get("/", (req, res) => {
   res.send({ message: "API Working" });
 });
+
+// Error handler middleware
+app.use(errorHandler);
 
 // Connect to DB & start server
 mongoose
