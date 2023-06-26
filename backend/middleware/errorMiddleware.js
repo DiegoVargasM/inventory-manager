@@ -1,5 +1,3 @@
-const dotenv = require("dotenv").config();
-
 const errorHandler = (err, req, res, next) => {
   // Check if status code exists
   const statusCode = res.statusCode ? res.statusCode : 500;
