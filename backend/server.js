@@ -1,19 +1,28 @@
+// Initialize dotenv
 const dotenv = require("dotenv").config();
+
+// Import dependencies
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-//converts the data to json
 const bodyParser = require("body-parser");
-const e = require("cors");
 
-const app = express();
+// Import routes
+const userRoutes = require("./routes/userRoutes");
 
+// Define app constants
 const PORT = process.env.PORT;
+
+// Initialize express
+const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Middleware for routes
+app.use("/api/users", userRoutes);
 
 //Route
 app.get("/", (req, res) => {
