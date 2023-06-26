@@ -1,3 +1,5 @@
+const dotenv = require("dotenv").config();
+
 const errorHandler = (err, req, res, next) => {
   // Check if status code exists
   const statusCode = res.statusCode ? res.statusCode : 500;
@@ -10,6 +12,7 @@ const errorHandler = (err, req, res, next) => {
     // Only show in development mode
     stack: process.env.NODE_ENV === "development" ? err.stack : null,
   });
+  next();
 };
 
 module.exports = { errorHandler };
