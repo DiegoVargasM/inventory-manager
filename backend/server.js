@@ -6,6 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 // Import error handler middleware
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -21,8 +22,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // Middleware for routes
 app.use("/api/users", userRoutes);

@@ -44,8 +44,21 @@ const registerUser = async (req, res) => {
       password,
     });
 
-    //Generate token
+    // Generate token
     const token = generateToken(user._id);
+
+    // Send HTTP-only cookie to frontend
+    res.cookie("token", token, {
+      // where the cookie is stored
+      path: "/",
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 86400), // 1 day
+      // last 2 execute on deploy:
+      // none because we will be deploying on different domains
+      sameSite: "none",
+      // we are using https
+      secure: true,
+    });
 
     if (user) {
       const { _id, name, email, profilePicture, phone, bio } = user;
