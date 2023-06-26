@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
 
-//Create a new user
+//Register a new user
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -28,10 +29,15 @@ const registerUser = async (req, res) => {
       throw new Error("Email already in use");
     }
 
+    // Encrypt password before saving to database
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create User
     const user = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
     if (user) {
       const { _id, name, email, profilePicture, phone, bio } = user;
@@ -49,7 +55,7 @@ const registerUser = async (req, res) => {
       throw new Error("Invalid user data");
     }
   } catch (error) {
-    res.status(400);
+    res.status(500);
     res.json({ error: error.message });
     return;
   }
