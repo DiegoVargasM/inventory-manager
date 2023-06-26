@@ -1,4 +1,13 @@
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+
+//Generate token
+const generateToken = (_id) => {
+  //sign takes 3 parameters: payload, secret, options
+  return jwt.sign({ _id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+};
 
 //Register a new user
 const registerUser = async (req, res) => {
@@ -34,6 +43,10 @@ const registerUser = async (req, res) => {
       email,
       password,
     });
+
+    //Generate token
+    const token = generateToken(user._id);
+
     if (user) {
       const { _id, name, email, profilePicture, phone, bio } = user;
       //201 represents something was created
@@ -44,6 +57,7 @@ const registerUser = async (req, res) => {
         profilePicture,
         phone,
         bio,
+        token,
       });
     } else {
       res.status(400);
