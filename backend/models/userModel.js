@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+// Encrypt password before saving to database
+// To avoid code repetition
+const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema(
   {
@@ -39,6 +42,20 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// we dont use arrow function because we need to use "this"
+// controller sends normal password and with .pre, we encrypt it
+// before saving it to the database
+userSchema.pre("save", async function (next) {
+  // If password is not modified, move on
+  if (!this.isModified("password")) {
+    return next();
+  }
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(this.password, salt);
+  this.password = hashedPassword;
+});
 
 const User = mongoose.model("User", userSchema);
 

@@ -1,5 +1,4 @@
 const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
 
 //Register a new user
 const registerUser = async (req, res) => {
@@ -29,15 +28,11 @@ const registerUser = async (req, res) => {
       throw new Error("Email already in use");
     }
 
-    // Encrypt password before saving to database
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     // Create User
     const user = await User.create({
       name,
       email,
-      password: hashedPassword,
+      password,
     });
     if (user) {
       const { _id, name, email, profilePicture, phone, bio } = user;
