@@ -6,6 +6,7 @@ const {
   loginUser,
   logoutUser,
   getUser,
+  loginStatus,
 } = require("../controllers/userControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -21,5 +22,8 @@ router.get("/logout", logoutUser);
 
 // Get user route (protected)
 router.get("/getuser", protectMiddleware, getUser);
+
+// Logged in user route
+router.get("/loggedin", loginStatus);
 
 module.exports = router;

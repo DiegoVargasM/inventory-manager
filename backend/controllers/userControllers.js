@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-//Generate token
+// Generate token
 const generateToken = (_id) => {
   //sign takes 3 parameters: payload, secret, options
   return jwt.sign({ _id }, process.env.JWT_SECRET, {
@@ -10,7 +10,7 @@ const generateToken = (_id) => {
   });
 };
 
-//Register a new user
+// Register a new user
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -84,7 +84,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-//Login a user
+// Login a user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -142,7 +142,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-//Logout a user
+// Logout a user
 const logoutUser = async (req, res) => {
   // Modify the cookie to remove the token
   res.cookie("token", "", {
@@ -155,7 +155,7 @@ const logoutUser = async (req, res) => {
   return res.status(200).json({ message: "Logged out succesfully" });
 };
 
-//Get user data
+// Get user data
 const getUser = async (req, res) => {
   //we have access to req.user because of the protect middleware
   try {
@@ -177,9 +177,29 @@ const getUser = async (req, res) => {
   }
 };
 
+// Get loggin status
+const loginStatus = async (req, res) => {
+  try {
+    // Check if token exists
+    const token = req.cookies.token;
+    if (!token) {
+      return res.json(false);
+    }
+    // If exists, verify it
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (verified) {
+      return res.json(true);
+    }
+    return res.json(false);
+  } catch (error) {
+    res.json(false);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
   getUser,
+  loginStatus,
 };
