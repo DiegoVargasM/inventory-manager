@@ -155,8 +155,31 @@ const logoutUser = async (req, res) => {
   return res.status(200).json({ message: "Logged out succesfully" });
 };
 
+//Get user data
+const getUser = async (req, res) => {
+  //we have access to req.user because of the protect middleware
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      const { _id, name, email, profilePicture, phone, bio } = user;
+      res.status(200).json({
+        _id,
+        name,
+        email,
+        profilePicture,
+        phone,
+        bio,
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    res.json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  getUser,
 };
