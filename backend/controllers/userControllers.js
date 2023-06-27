@@ -229,6 +229,9 @@ const updateUser = async (req, res) => {
   }
 };
 
+// Update user password
+const updatePassword = async (req, res) => {};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -236,4 +239,5 @@ module.exports = {
   getUser,
   loginStatus,
   updateUser,
+  updatePassword,
 };
