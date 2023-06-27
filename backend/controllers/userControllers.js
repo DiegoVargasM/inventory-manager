@@ -142,7 +142,21 @@ const loginUser = async (req, res) => {
   }
 };
 
+//Logout a user
+const logoutUser = async (req, res) => {
+  // Modify the cookie to remove the token
+  res.cookie("token", "", {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(0), // expire cookie
+    sameSite: "none",
+    secure: true,
+  });
+  return res.status(200).json({ message: "Logged out succesfully" });
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
 };
