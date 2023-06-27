@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 //Generate token
 const generateToken = (_id) => {
@@ -83,4 +84,48 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser };
+//Login a user
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    // Check if email and password are provided
+    if (!email || !password) {
+      res.status(400);
+      throw new Error("Please fill all the fields");
+    }
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(400);
+      throw new Error("User not found");
+    }
+
+    // Check if password is correct
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (user && passwordMatch) {
+      const { _id, name, email, profilePicture, phone, bio } = user;
+      // 200 represents OK
+      res.status(200).json({
+        _id,
+        name,
+        email,
+        profilePicture,
+        phone,
+        bio,
+      });
+    } else {
+      res.status(400);
+      throw new Error("Invalid email or password");
+    }
+  } catch (error) {
+    res.status(500);
+    res.json({ error: error.message });
+  }
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+};
