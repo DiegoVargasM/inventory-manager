@@ -137,8 +137,7 @@ const loginUser = async (req, res) => {
       throw new Error("Invalid email or password");
     }
   } catch (error) {
-    res.status(500);
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -172,8 +171,7 @@ const getUser = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400);
-    res.json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -220,17 +218,51 @@ const updateUser = async (req, res) => {
         phone: updatedUser.phone,
         bio: updatedUser.bio,
       });
-    } else {
-      res.status(404);
-      throw new Error("User not found");
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
 // Update user password
-const updatePassword = async (req, res) => {};
+const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    // we are expecting the current password &
+    //the new password from the frontend
+    const { currentPassword, newPassword } = req.body;
+
+    // Validation
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found, please login again");
+    }
+
+    if (!currentPassword || !newPassword) {
+      res.status(400);
+      throw new Error("Please add your current password and the new password");
+    }
+
+    // Check if currentPassword match DB password
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!passwordMatch) {
+      res.status(400);
+      throw new Error("Current password is incorrect");
+    }
+
+    if (user && passwordMatch) {
+      user.password = newPassword;
+      await user.save();
+      res.status(200).json({ message: "Password updated successfully" });
+    } else {
+      res.status(400);
+      throw new Error("Invalid user data");
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   registerUser,
