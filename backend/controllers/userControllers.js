@@ -196,10 +196,44 @@ const loginStatus = async (req, res) => {
   }
 };
 
+// Update user data
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      const { _id, name, email, profilePicture, phone, bio } = user;
+      // email is not updatable
+      user.email = email;
+      // other fields are updatable
+      user.name = req.body.name || name;
+      user.profilePicture = req.body.profilePicture || profilePicture;
+      user.phone = req.body.phone || phone;
+      user.bio = req.body.bio || bio;
+
+      const updatedUser = await user.save();
+
+      res.status(200).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        profilePicture: updatedUser.profilePicture,
+        phone: updatedUser.phone,
+        bio: updatedUser.bio,
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
   getUser,
   loginStatus,
+  updateUser,
 };

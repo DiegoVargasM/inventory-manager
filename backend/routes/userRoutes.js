@@ -7,6 +7,7 @@ const {
   logoutUser,
   getUser,
   loginStatus,
+  updateUser,
 } = require("../controllers/userControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -15,15 +16,18 @@ const protectMiddleware = require("../middleware/authMiddleware");
 router.post("/register", registerUser);
 
 // User login route
-router.post("/login", loginUser);
+router.post("/log-in", loginUser);
 
 // User logout route
-router.get("/logout", logoutUser);
+router.get("/log-out", logoutUser);
 
 // Get user route (protected)
-router.get("/getuser", protectMiddleware, getUser);
+router.get("/get-user", protectMiddleware, getUser);
 
 // Logged in user route
-router.get("/loggedin", loginStatus);
+router.get("/logged-in", loginStatus);
+
+// Update user profile route
+router.patch("/update-user", protectMiddleware, updateUser);
 
 module.exports = router;
