@@ -227,7 +227,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Update user password
+// Update user password (only if logged in)
 const updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -307,7 +307,7 @@ const sendForgotPasswordEmail = async (req, res) => {
     }).save();
 
     // Construct reset URL to be sent to user
-    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
     // Construct email
     const message = `
@@ -331,6 +331,43 @@ const sendForgotPasswordEmail = async (req, res) => {
   }
 };
 
+// Reset (put) user password (not logged in)
+const resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const { resetToken } = req.params;
+
+    // Hash token to compare with token in DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    // Find token in DB
+    const userToken = await Token.findOne({
+      token: hashedToken,
+      // greater than current time means token is not expired
+      expiresAt: { $gt: Date.now() },
+    });
+
+    if (!userToken) {
+      res.status(404);
+      throw new Error("Invalid or expired token");
+    }
+
+    // Find user in DB using the referenced user id in the token
+    const user = await User.findById(userToken.userId);
+    user.password = password;
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Password reset successful. Please login with your new password",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -340,4 +377,5 @@ module.exports = {
   updateUser,
   updatePassword,
   sendForgotPasswordEmail,
+  resetPassword,
 };

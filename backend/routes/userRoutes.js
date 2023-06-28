@@ -10,6 +10,7 @@ const {
   updateUser,
   updatePassword,
   sendForgotPasswordEmail,
+  resetPassword,
 } = require("../controllers/userControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -37,6 +38,9 @@ router.patch("/update-password", protectMiddleware, updatePassword);
 
 // Send forgot password email route
 router.post("/forgot-password", sendForgotPasswordEmail);
+
+// Reset password route (after clicking on link in email, not protected)
+router.put("/reset-password/:resetToken", resetPassword);
 
 // Export router
 module.exports = router;
