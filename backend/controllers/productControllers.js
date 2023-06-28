@@ -1,5 +1,7 @@
 const Product = require("../models/productModel");
 const { fileSizeFormatter } = require("../utils/fileUpload");
+// Import cloudinary
+const cloudinary = require("cloudinary").v2;
 
 // Create a new product
 const createProduct = async (req, res) => {
@@ -15,9 +17,21 @@ const createProduct = async (req, res) => {
     let fileData = {};
     // if there is a file in the request
     if (req.file) {
+      // upload the file to cloudinary
+      let uploadedFile;
+      try {
+        //.upload (file path, options)
+        uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+          folder: "Inventory_Manager_App",
+          resource_type: "image",
+        });
+      } catch (error) {
+        res.status(500);
+        throw new Error("Something went wrong with image upload");
+      }
       fileData = {
         fileName: req.file.originalname,
-        filePath: req.file.path,
+        filePath: uploadedFile.secure_url,
         fileType: req.file.mimetype,
         fileSize: fileSizeFormatter(req.file.size, 2),
       };
