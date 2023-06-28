@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   createProduct,
   getProducts,
+  getProduct,
 } = require("../controllers/productControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -11,14 +12,12 @@ const protectMiddleware = require("../middleware/authMiddleware");
 const { upload } = require("../utils/fileUpload");
 
 // Create product (protected and use the upload middleware)
-router.post(
-  "/create-product",
-  protectMiddleware,
-  upload.single("image"),
-  createProduct
-);
+router.post("/", protectMiddleware, upload.single("image"), createProduct);
 
 // Get all products
-router.get("/get-products", protectMiddleware, getProducts);
+router.get("/", protectMiddleware, getProducts);
+
+// Get one product
+router.get("/:id", protectMiddleware, getProduct);
 
 module.exports = router;

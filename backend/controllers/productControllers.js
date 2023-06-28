@@ -64,10 +64,37 @@ const getProducts = async (req, res) => {
       createdAt: -1,
     });
     res.status(200).json(products);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
+// Get one product
+const getProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    // Check if product exists
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+
+    // Check if product belongs to the logged in user
+    // .user is an ObjectId, so we need to convert it to a string
+    if (product.user.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Exports
 module.exports = {
   createProduct,
   getProducts,
+  getProduct,
 };
