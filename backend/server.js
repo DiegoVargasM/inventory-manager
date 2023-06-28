@@ -13,6 +13,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 
 // Import routes
 const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 // Define app constants
 const PORT = process.env.PORT;
@@ -29,6 +30,7 @@ app.use(cors());
 
 // Middleware for routes
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
 
 //Route
 app.get("/", (req, res) => {
