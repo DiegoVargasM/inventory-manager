@@ -16,6 +16,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 // Import routes
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 // Define app constants
 const PORT = process.env.PORT;
@@ -32,9 +33,10 @@ app.use(cors());
 // Define uploads folder as static
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-// Middleware for routes
+// Routes Middleware
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/contact-us", contactRoutes);
 
 //Route
 app.get("/", (req, res) => {
