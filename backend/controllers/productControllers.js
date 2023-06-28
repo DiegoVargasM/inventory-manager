@@ -56,6 +56,18 @@ const createProduct = async (req, res) => {
   }
 };
 
+// Get all products
+const getProducts = async (req, res) => {
+  try {
+    // Get all products that belong to the logged in user
+    const products = await Product.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(products);
+  } catch (error) {}
+};
+
 module.exports = {
   createProduct,
+  getProducts,
 };
