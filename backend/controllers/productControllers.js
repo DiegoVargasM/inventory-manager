@@ -92,9 +92,33 @@ const getProduct = async (req, res) => {
   }
 };
 
+// Delete a product
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    // Check if product exists
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+
+    // Check if product belongs to the logged in user
+    // .user is an ObjectId, so we need to convert it to a string
+    if (product.user.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error("User not authorized to delete this product");
+    }
+    await product.deleteOne();
+    res.status(200).json({ message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Exports
 module.exports = {
   createProduct,
   getProducts,
   getProduct,
+  deleteProduct,
 };
