@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const Token = require("../models/tokenModel");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 // Generate token
 const generateToken = (_id) => {
@@ -264,9 +267,68 @@ const updatePassword = async (req, res) => {
   }
 };
 
-// Forgot password
-const forgotPassword = async (req, res) => {
-  res.send("Forgot password route");
+// Send reset password email
+const sendForgotPasswordEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User does not exist");
+    }
+
+    // Delete token if it exists in DB
+    let token = await Token.findOne({ userId: user._id });
+    if (token) {
+      await token.deleteOne();
+    }
+
+    // Create reset token
+    // random string of 32 characters + user id
+    let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
+    //console.log(resetToken);
+
+    // Hash token before saving with crypto
+    const hashedToken = crypto
+      // we are using sha256 algorithm
+      .createHash("sha256")
+      // what we want to hash
+      .update(resetToken)
+      // output the hashed token in hexadecimal format
+      .digest("hex");
+
+    // Save token to DB
+    await new Token({
+      userId: user._id,
+      token: hashedToken,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 30 * (60 * 1000), // 30 mins
+    }).save();
+
+    // Construct reset URL to be sent to user
+    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+    // Construct email
+    const message = `
+        <h2>Hello ${user.name}</h2>
+        <p>Please use the link below to reset your password.</p>  
+        <p>This reset link is valid for 30 minutes.</p>
+        <p>If you did not request a password reset, please ignore this email.</p>
+        <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+
+        <p>Have a great day!</p>
+        <p>Inventory Manager App</p>
+      `;
+    const subject = "Password Reset Request - Inventory Manager App";
+    const send_to = user.email;
+    const sent_from = process.env.EMAIL_USER;
+
+    await sendEmail(subject, message, send_to, sent_from);
+    res.status(200).json({ success: true, message: "Reset Email Sent" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = {
@@ -277,5 +339,5 @@ module.exports = {
   loginStatus,
   updateUser,
   updatePassword,
-  forgotPassword,
+  sendForgotPasswordEmail,
 };
