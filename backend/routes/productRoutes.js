@@ -6,6 +6,6 @@ const { createProduct } = require("../controllers/productControllers");
 const protectMiddleware = require("../middleware/authMiddleware");
 
 // Create product route (protected)
-router.post("/create", protectMiddleware, createProduct);
+router.post("/create-product", protectMiddleware, createProduct);
 
 module.exports = router;
