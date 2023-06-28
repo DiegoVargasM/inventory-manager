@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+// work with file paths and directories
+const path = require("path");
 
 // Import error handler middleware
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -27,6 +29,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+// Define uploads folder as static
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Middleware for routes
 app.use("/api/users", userRoutes);
