@@ -264,6 +264,11 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// Forgot password
+const forgotPassword = async (req, res) => {
+  res.send("Forgot password route");
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -272,4 +277,5 @@ module.exports = {
   loginStatus,
   updateUser,
   updatePassword,
+  forgotPassword,
 };

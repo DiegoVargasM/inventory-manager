@@ -9,6 +9,7 @@ const {
   loginStatus,
   updateUser,
   updatePassword,
+  forgotPassword,
 } = require("../controllers/userControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -34,4 +35,8 @@ router.patch("/update-user", protectMiddleware, updateUser);
 // Update user password route (protected)
 router.patch("/update-password", protectMiddleware, updatePassword);
 
+// Forgot password route
+router.post("/forgot-password", forgotPassword);
+
+// Export router
 module.exports = router;
