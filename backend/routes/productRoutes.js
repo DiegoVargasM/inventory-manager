@@ -6,6 +6,7 @@ const {
   getProducts,
   getProduct,
   deleteProduct,
+  updateProduct,
 } = require("../controllers/productControllers");
 // Import protection middleware
 const protectMiddleware = require("../middleware/authMiddleware");
@@ -23,6 +24,9 @@ router.get("/:id", protectMiddleware, getProduct);
 
 // Delete a product
 router.delete("/:id", protectMiddleware, deleteProduct);
+
+// Update a product
+router.patch("/:id", protectMiddleware, upload.single("image"), updateProduct);
 
 // export
 module.exports = router;

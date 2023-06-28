@@ -115,10 +115,76 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// Update a product
+const updateProduct = async (req, res) => {
+  try {
+    const { name, category, quantity, price, description } = req.body;
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+
+    // Check if product exists
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+
+    // Check if product belongs to the logged in user
+    if (product.user.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error("User not authorized to update this product");
+    }
+
+    // Handle image upload to cloudinary
+    let fileData = {};
+    // ONLY if there is a file in the request
+    if (req.file) {
+      let uploadedFile;
+      try {
+        uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+          folder: "Inventory_Manager_App",
+          resource_type: "image",
+        });
+      } catch (error) {
+        res.status(500);
+        throw new Error("Something went wrong with the image upload");
+      }
+      fileData = {
+        fileName: req.file.originalname,
+        filePath: uploadedFile.secure_url,
+        fileType: req.file.mimetype,
+        fileSize: fileSizeFormatter(req.file.size, 2),
+      };
+    }
+
+    // Update product in DB
+    const updatedProduct = await Product.findByIdAndUpdate(
+      { _id: id },
+      // we dont update the sku
+      {
+        name,
+        category,
+        quantity,
+        price,
+        description,
+        // in case there is no new image, keep the old one
+        image: Object.keys(fileData).length === 0 ? product?.image : fileData,
+      },
+      // return the updated object and run validators
+      { new: true, runValidators: true }
+    );
+
+    res.status(201).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Exports
 module.exports = {
   createProduct,
   getProducts,
   getProduct,
   deleteProduct,
+  updateProduct,
 };
