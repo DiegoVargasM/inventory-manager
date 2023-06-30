@@ -1,12 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Import pages
 import Home from "./pages/Home/Home";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Forgot from "./pages/auth/Forgot";
+import Reset from "./pages/auth/Reset";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/log-in" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<Forgot />} />
+        <Route path="/reset-password" element={<Reset />} />
       </Routes>
     </BrowserRouter>
   );
