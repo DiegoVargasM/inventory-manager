@@ -25,7 +25,7 @@ const Register = () => {
               type="password"
               placeholder="Confirm Password..."
               required
-              name="passwordConfirm"
+              name="password2"
             />
             <button type="submit" className="--btn --btn-primary --btn-block">
               Register

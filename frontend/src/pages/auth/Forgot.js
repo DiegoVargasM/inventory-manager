@@ -1,6 +1,7 @@
 import Card from "../../components/card/Card";
 import styles from "./auth.module.scss";
 import { AiOutlineMail } from "react-icons/ai";
+
 import { Link } from "react-router-dom";
 
 const Forgot = () => {
@@ -11,7 +12,7 @@ const Forgot = () => {
           <div className="--flex-center">
             <AiOutlineMail size={35} color="lightgrey" />
           </div>
-          <h2>Reset Password</h2>
+          <h2>Forgot Password</h2>
           <form>
             <input type="email" placeholder="Email..." required name="email" />
             <button type="submit" className="--btn --btn-primary --btn-block">
