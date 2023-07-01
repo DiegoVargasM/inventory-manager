@@ -11,7 +11,7 @@ const Login = () => {
           <div className="--flex-center">
             <BiLogIn size={35} color="lightgrey" />
           </div>
-          <h2>Login</h2>
+          <h2>Log In</h2>
           <form>
             <input type="email" placeholder="Email..." required name="email" />
             <input
@@ -21,7 +21,7 @@ const Login = () => {
               name="password"
             />
             <button type="submit" className="--btn --btn-primary --btn-block">
-              Login
+              Log In
             </button>
           </form>
           <Link to="/forgot-password" className="--btn hovered">
