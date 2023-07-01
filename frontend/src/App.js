@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// Import pages
+// Import pages and components
 import Home from "./pages/Home/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Forgot from "./pages/auth/Forgot";
 import Reset from "./pages/auth/Reset";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Sidebar from "./components/sidebar/Sidebar";
+import Layout from "./components/layout/Layout";
 
 function App() {
   return (
@@ -15,6 +18,16 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path="/reset-password/:resetToken" element={<Reset />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Sidebar>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
