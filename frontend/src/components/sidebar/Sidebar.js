@@ -4,9 +4,15 @@ import { RiProductHuntLine } from "react-icons/ri";
 import menu from "../../data/sidebar";
 import SidebarItem from "./SidebarItem";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
+
+  const goToHome = () => {
+    navigate("/");
+  };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -17,7 +23,7 @@ const Sidebar = ({ children }) => {
       <div className="sidebar" style={{ width: isOpen ? "230px" : "60px" }}>
         <div className="top_section">
           <div className="logo" style={{ display: isOpen ? "block" : "none" }}>
-            <RiProductHuntLine size={35} />
+            <RiProductHuntLine onClick={goToHome} size={35} />
           </div>
           <div
             className="bars"
