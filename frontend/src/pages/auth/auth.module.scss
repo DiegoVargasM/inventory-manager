@@ -1,0 +1,75 @@
+.auth {
+	min-height: 80vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.form {
+		width: 35rem;
+		padding: 1.5rem;
+		background-color: #fff;
+
+		h2 {
+			color: rgb(255, 51, 0);
+			text-align: center;
+		}
+
+		form {
+
+			input[type="text"],
+			input[type="email"],
+			input[type="password"] {
+				display: block;
+				font-size: 1.6rem;
+				font-weight: 300;
+				padding: 1rem;
+				margin: 1rem auto;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-bottom: 3px solid #ccc;
+				border-radius: 3px;
+				outline: none;
+
+				&:focus {
+					outline: none;
+					box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+					border-bottom: 3px solid #55c57a;
+				}
+
+				&:focus:invalid {
+					border-bottom: 3px solid #ff3030;
+				}
+			}
+
+			.links {
+				display: flex;
+				justify-content: space-between;
+				margin: 5px 0;
+			}
+
+			p {
+				text-align: center;
+				margin: 1rem;
+			}
+		}
+
+		.register {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 1rem;
+			& > p {
+				margin-right: 1.2rem;
+				margin-left: 1.2rem;
+			}
+			& > a {
+				color: var(--color-dark);
+				font-weight: 600;
+				transition: all 0.2s;
+				&:hover {
+					color: #55c57a;
+				}
+			}
+		}
+	}
+}
