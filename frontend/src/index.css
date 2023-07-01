@@ -326,12 +326,9 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s;
 }
 
-.--btn:hover {
-  transform: translateY(-2px);
-}
+
 
 .--btn-lg {
   padding: 8px 10px;
@@ -354,7 +351,7 @@ p {
 
 .--btn-danger {
   color: #fff;
-  background: orangered;
+  background: rgb(255, 0, 0);
 }
 
 .--btn-success {
@@ -483,19 +480,14 @@ p {
 
 a {
   font-size: 1.4rem;
-  /* color: var(--dark-blue); */
+  color: black;
   text-decoration: none;
-  transition: all 0.2s;
 }
 
 ul {
   list-style: none;
 }
 
-a:hover {
-  /* color: var(--color-dark); */
-  font-size: 1.5rem;
-}
 
 .ql-editor {
   min-height: 200px;
@@ -529,5 +521,14 @@ a:hover {
   color: #fff;
   background-color: var(--light-blue);
   height: 100%;
+}
+
+.hovered {
+  color: var(--color-dark);
+  font-weight: 500;
+  transition: all 0.2s;
+  &:hover {
+    color: #55c57a;
+  }
 }
 
