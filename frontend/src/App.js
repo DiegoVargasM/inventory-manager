@@ -9,9 +9,18 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Sidebar from "./components/sidebar/Sidebar";
 import Layout from "./components/layout/Layout";
 
+// Import react-toastify
+import { ToastContainer, toast } from "react-toastify";
+
+//Import axios to make withCredentials true globally
+// allow cookies to be sent with cross - origin requests
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/log-in" element={<Login />} />
