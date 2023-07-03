@@ -13,6 +13,8 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Sidebar from "./components/sidebar/Sidebar";
 import Layout from "./components/layout/Layout";
 import AddProduct from "./pages/addProduct/AddProduct";
+import ProductDetail from "./components/product/productDetails/productDetail";
+import EditProduct from "./pages/editProduct/EditProduct";
 
 // Import react-toastify
 import { ToastContainer } from "react-toastify";
@@ -61,6 +63,26 @@ function App() {
             <Sidebar>
               <Layout>
                 <AddProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/product-detail/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <ProductDetail />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-product/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditProduct />
               </Layout>
             </Sidebar>
           }
