@@ -15,7 +15,7 @@ export const validateEmail = (email) => {
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/users/register`,
+      `${BACKEND_URL}/api/users/register`,
       userData,
       // for example purposes, its globally set in App.js
       { withCredentials: true }
