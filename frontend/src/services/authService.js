@@ -2,6 +2,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// email validation function
+export const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+
 // http requests related to authentication (backend calls)
 
 // register a new user to db
