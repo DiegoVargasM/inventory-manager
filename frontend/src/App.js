@@ -11,6 +11,7 @@ import Layout from "./components/layout/Layout";
 
 // Import react-toastify
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Import axios to make withCredentials true globally
 // allow cookies to be sent with cross - origin requests
