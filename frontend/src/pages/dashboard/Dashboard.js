@@ -7,11 +7,10 @@ import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import { getProducts } from "../../redux/features/products/productSlice";
 
 const Dashboard = () => {
-  useRedirectLoggedOutUser("/log-in");
+  useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // we want to bring the following from the productSlice:
   const { products, isLoading, isError, message } = useSelector(
     (state) => state.product
   );

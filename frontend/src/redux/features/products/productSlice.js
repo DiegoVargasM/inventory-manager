@@ -9,12 +9,12 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  totalStoreValue: 0,
+  outOfStock: 0,
+  category: [],
 };
 
 // Create New Product
-// create async thunk: action creator that returns a promise
-// the results after the http request is stored in the extra reducers
-// 3 possible states: pending, fulfilled, rejected (extraReducers handles this)
 export const createProduct = createAsyncThunk(
   "products/create",
   async (formData, thunkAPI) => {
@@ -28,7 +28,6 @@ export const createProduct = createAsyncThunk(
         error.message ||
         error.toString();
       console.log(message);
-      // rejectWithValue: returns a rejected thunk with a value
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -170,7 +169,6 @@ const productSlice = createSlice({
       .addCase(createProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        // the message we get from the server
         state.message = action.payload;
         toast.error(action.payload);
       })

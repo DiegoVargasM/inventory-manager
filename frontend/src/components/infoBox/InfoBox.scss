@@ -1,0 +1,27 @@
+.info-box {
+	width: 100%;
+	height: 11rem;
+	max-width: 22rem;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	vertical-align: middle;
+	flex-wrap: wrap;
+	color: #fff;
+	padding: 1rem;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	.info-icon {
+		padding: 0 2rem;
+		color: #fff;
+	}
+
+	.info-text>* {
+		color: #fff;
+	}
+}
