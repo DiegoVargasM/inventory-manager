@@ -1,10 +1,13 @@
 import Card from "../../components/card/Card";
 import styles from "./auth.module.scss";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { validateEmail, registerUser } from "../../services/authService";
+import { useDispatch } from "react-redux";
+import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
+import Loader from "../../components/loader/Loader";
 
 const initialState = {
   name: "",
@@ -14,6 +17,8 @@ const initialState = {
 };
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const { name, email, password, password2 } = formData;
@@ -42,8 +47,10 @@ const Register = () => {
       if (data) {
         setFormData(initialState);
       }
+      await dispatch(SET_LOGIN(true));
+      await dispatch(SET_NAME(data.name));
+      navigate("/dashboard");
       setIsLoading(false);
-      console.log(data);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -52,6 +59,7 @@ const Register = () => {
 
   return (
     <div className={`container ${styles.auth}`}>
+      {isLoading && <Loader />}
       <Card>
         <div className={styles.form}>
           <div className="--flex-center">

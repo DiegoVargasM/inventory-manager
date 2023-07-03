@@ -23,6 +23,7 @@ const authSlice = createSlice({
   reducers: {
     // Get the login status
     SET_LOGIN(state, action) {
+      localStorage.setItem("isLoggedin", JSON.stringify(action.payload));
       state.isLoggedIn = action.payload;
     },
     // Name is used in several places
