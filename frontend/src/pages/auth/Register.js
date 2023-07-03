@@ -43,14 +43,15 @@ const Register = () => {
     const userData = { name, email, password };
     setIsLoading(true);
     try {
+      setIsLoading(false);
       const data = await registerUser(userData);
       if (data) {
         setFormData(initialState);
       }
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.name));
+
       navigate("/dashboard");
-      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.log(error);

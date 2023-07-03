@@ -30,7 +30,6 @@ export const registerUser = async (userData) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-
     toast.error(message);
   }
 };
