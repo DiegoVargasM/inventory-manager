@@ -1,4 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getLoginStatus } from "./services/authService";
+import { SET_LOGIN } from "./redux/features/auth/authSlice";
 // Import pages and components
 import Home from "./pages/Home/Home";
 import Login from "./pages/auth/Login";
@@ -16,9 +20,21 @@ import "react-toastify/dist/ReactToastify.css";
 //Import axios to make withCredentials true globally
 // allow cookies to be sent with cross - origin requests
 import axios from "axios";
+
 axios.defaults.withCredentials = true;
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // check if user is logged in on render
+    async function loginStatus() {
+      const status = await getLoginStatus();
+      dispatch(SET_LOGIN(status));
+    }
+    loginStatus();
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <ToastContainer />
