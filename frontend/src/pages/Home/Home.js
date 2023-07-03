@@ -3,6 +3,10 @@ import { RiProductHuntLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "./Home.scss";
 import invImg from "../../assets/inv-img.jpg";
+import {
+  ShowOnLogin,
+  ShowOnLogout,
+} from "../../components/protect/hiddenLinks";
 
 const Home = () => {
   return (
@@ -13,23 +17,27 @@ const Home = () => {
         </div>
 
         <ul className="home-links">
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/register">Register</Link>
-            </button>
-          </li>
-
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/log-in">Login</Link>
-            </button>
-          </li>
-
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/dashboard">Dashboard</Link>
-            </button>
-          </li>
+          <ShowOnLogout>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/register">Register</Link>
+              </button>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogout>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/log-in">Login</Link>
+              </button>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/dashboard">Dashboard</Link>
+              </button>
+            </li>
+          </ShowOnLogin>
         </ul>
       </nav>
       <section className="container hero">
