@@ -11,7 +11,7 @@ export const validateEmail = (email) => {
 
 // http requests related to authentication (backend calls)
 
-// register a new user to db
+// Register user
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
@@ -58,6 +58,40 @@ export const loginUser = async (userData) => {
 export const logoutUser = async () => {
   try {
     await axios.get(`${BACKEND_URL}/api/users/log-out`);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+// Forgot Password
+export const forgotPassword = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/users/forgot-password`,
+      userData
+    );
+    toast.success(response.data.message);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+// Reset Password
+export const resetPassword = async (userData, resetToken) => {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/api/users/reset-password/${resetToken}`,
+      userData
+    );
+    return response.data;
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
