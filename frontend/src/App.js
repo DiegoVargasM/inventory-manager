@@ -12,6 +12,7 @@ import Reset from "./pages/auth/Reset";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Sidebar from "./components/sidebar/Sidebar";
 import Layout from "./components/layout/Layout";
+import AddProduct from "./pages/addProduct/AddProduct";
 
 // Import react-toastify
 import { ToastContainer } from "react-toastify";
@@ -50,6 +51,16 @@ function App() {
             <Sidebar>
               <Layout>
                 <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-product"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddProduct />
               </Layout>
             </Sidebar>
           }
