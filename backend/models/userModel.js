@@ -25,7 +25,7 @@ const userSchema = new Schema(
       required: [true, "Please enter your password"],
       minLength: [6, "Your password must be at least 6 characters long"],
     },
-    profilePicture: {
+    photo: {
       type: String,
       required: [true, "Please enter your profile picture"],
       default: "https://i.ibb.co/4pDNDk1/avatar.png",

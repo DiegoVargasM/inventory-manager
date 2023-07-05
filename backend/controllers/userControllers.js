@@ -184,7 +184,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.email = email;
     // other fields are updatable
     user.name = req.body.name || name;
-    user.profilePicture = req.body.profilePicture || profilePicture;
+    user.photo = req.body.photo || photo;
     user.phone = req.body.phone || phone;
     user.bio = req.body.bio || bio;
 
@@ -193,7 +193,7 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      profilePicture: updatedUser.profilePicture,
+      photo: updatedUser.photo,
       phone: updatedUser.phone,
       bio: updatedUser.bio,
     });
