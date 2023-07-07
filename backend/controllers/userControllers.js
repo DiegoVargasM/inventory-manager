@@ -25,7 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
   if (password.length < 6) {
     res.status(400);
-    throw new Error("Password must be at least 6 characters");
+    throw new Error("Password must be at least 6 characters long");
   }
 
   // Check if user email already exists

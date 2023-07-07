@@ -36,6 +36,9 @@ const Register = () => {
     if (password !== password2) {
       return toast.error("Passwords do not match");
     }
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters long");
+    }
     if (!validateEmail(email)) {
       return toast.error("Please enter a valid email");
     }
