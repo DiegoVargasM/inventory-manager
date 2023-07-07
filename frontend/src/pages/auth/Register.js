@@ -50,8 +50,8 @@ const Register = () => {
       if (data) {
         setFormData(initialState);
       }
-      dispatch(SET_LOGIN(true));
-      dispatch(SET_NAME(data.name));
+      await dispatch(SET_LOGIN(true));
+      await dispatch(SET_NAME(data.name));
       setIsLoading(false);
       navigate("/dashboard");
     } catch (error) {
