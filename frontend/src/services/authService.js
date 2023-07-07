@@ -9,7 +9,10 @@ export const validateEmail = (email) => {
   );
 };
 
-// http requests related to authentication (backend calls)
+// Backend calls: (auth)
+
+// response.statsText possible values:
+// OK, Created, Accepted, No Content, Bad Request, Unauthorized, Forbidden, Not Found, Conflict, Internal Server Error
 
 // Register user
 export const registerUser = async (userData) => {
@@ -20,11 +23,13 @@ export const registerUser = async (userData) => {
       // for example purposes, its globally set in App.js
       { withCredentials: true }
     );
+    console.log(response);
     if (response.statusText === "OK") {
       toast.success("Registration successful");
     }
     return response.data;
   } catch (error) {
+    console.log(error);
     // list of possible error formats
     const message =
       (error.response && error.response.data && error.response.data.message) ||

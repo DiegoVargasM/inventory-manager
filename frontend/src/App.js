@@ -16,16 +16,15 @@ import AddProduct from "./pages/addProduct/AddProduct";
 import ProductDetail from "./components/product/productDetails/productDetail";
 import EditProduct from "./pages/editProduct/EditProduct";
 import Profile from "./pages/profile/Profile";
+import EditProfile from "./pages/profile/EditProfile";
 
 // Import react-toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//Import axios to make withCredentials true globally
-// allow cookies to be sent with cross - origin requests
+//Import axios to make withCredentials property true globally
+// (allow cookies to be sent with cross - origin requests)
 import axios from "axios";
-import EditProfile from "./pages/profile/EditProfile";
-
 axios.defaults.withCredentials = true;
 
 function App() {
