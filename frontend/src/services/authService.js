@@ -98,6 +98,7 @@ export const resetPassword = async (userData, resetToken) => {
       `${BACKEND_URL}/api/users/reset-password/${resetToken}`,
       userData
     );
+    console.log("service response:", response);
     return response.data;
   } catch (error) {
     const message =

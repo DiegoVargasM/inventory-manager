@@ -234,6 +234,7 @@ const updatePassword = asyncHandler(async (req, res) => {
   }
 });
 
+// Token is generated and saved in DB here
 // Send reset password email
 const sendForgotPasswordEmail = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -299,6 +300,7 @@ const sendForgotPasswordEmail = asyncHandler(async (req, res) => {
   }
 });
 
+// Token is verified here
 // Reset (put) user password (not logged in)
 const resetPassword = asyncHandler(async (req, res) => {
   const { password } = req.body;
