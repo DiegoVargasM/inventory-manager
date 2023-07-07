@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   cors({
+    // we are allowing cookies(c:true) to be sent with cross-origin requests
     origin: ["http://localhost:3000"],
     credentials: true,
   })

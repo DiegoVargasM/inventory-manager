@@ -33,11 +33,11 @@ const Register = () => {
     if (!name || !email || !password || !password2) {
       return toast.error("Please fill in all the fields");
     }
-    if (password !== password2) {
-      return toast.error("Passwords do not match");
-    }
     if (password.length < 6) {
       return toast.error("Password must be at least 6 characters long");
+    }
+    if (password !== password2) {
+      return toast.error("Passwords do not match");
     }
     if (!validateEmail(email)) {
       return toast.error("Please enter a valid email");
@@ -50,8 +50,8 @@ const Register = () => {
       if (data) {
         setFormData(initialState);
       }
-      await dispatch(SET_LOGIN(true));
-      await dispatch(SET_NAME(data.name));
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.name));
       setIsLoading(false);
       navigate("/dashboard");
     } catch (error) {
