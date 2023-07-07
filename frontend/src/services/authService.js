@@ -79,8 +79,10 @@ export const forgotPassword = async (userData) => {
       `${BACKEND_URL}/api/users/forgot-password`,
       userData
     );
+    console.log(response);
     toast.success(response.data.message);
   } catch (error) {
+    console.log(error);
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
