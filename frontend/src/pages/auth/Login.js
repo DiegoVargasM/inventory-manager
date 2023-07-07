@@ -35,9 +35,6 @@ const Login = () => {
     if (!validateEmail(email)) {
       return toast.error("Please enter a valid email");
     }
-    if (!validateEmail(email)) {
-      return toast.error("Please enter a valid email");
-    }
     // login user
     const userData = { email, password };
     setIsLoading(true);

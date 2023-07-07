@@ -13,6 +13,7 @@ const Loader = () => {
   );
 };
 
+// no portal only img
 export const SpinnerImg = () => {
   return (
     <div className="--center-all">
