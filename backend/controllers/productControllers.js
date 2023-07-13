@@ -33,8 +33,8 @@ const createProduct = asyncHandler(async (req, res) => {
 
     fileData = {
       fileName: req.file.originalname,
-      filePath: uploadedFile.secure_url,
-      fileType: req.file.mimetype,
+      filePath: uploadedFile.secure_url, // guardar la url de la imagen en cloudinary
+      fileType: req.file.mimetype, //jpg, png, etc
       fileSize: fileSizeFormatter(req.file.size, 2),
     };
   }
