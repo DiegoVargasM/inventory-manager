@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 const API_URL = `${BACKEND_URL}/api/products/`;
+
+// we dont use try catch because we will be calling from async thunks
 
 // Create New Product
 const createProduct = async (formData) => {

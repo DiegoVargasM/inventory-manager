@@ -14,6 +14,11 @@ const initialState = {
   category: [],
 };
 
+// usar async thunks, nos permite manejar el estado de carga de la petición
+// manejo de errores consistente y se integra con el flujo de redux
+// (pending, fulfilled, rejected) se manejan en el extraReducers
+// pending: not resolved or rejected
+
 // Create New Product
 export const createProduct = createAsyncThunk(
   "products/create",
@@ -28,7 +33,7 @@ export const createProduct = createAsyncThunk(
         error.message ||
         error.toString();
       console.log(message);
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message); // en lugar de excepción, se envía mensaje personalizado
     }
   }
 );
@@ -155,6 +160,7 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // createProduct
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -172,6 +178,7 @@ const productSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload);
       })
+      // getProducts
       .addCase(getProducts.pending, (state) => {
         state.isLoading = true;
       })
@@ -188,6 +195,7 @@ const productSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload);
       })
+      // deleteProduct
       .addCase(deleteProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -203,6 +211,7 @@ const productSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload);
       })
+      // getProduct
       .addCase(getProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -218,6 +227,7 @@ const productSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload);
       })
+      // updateProduct
       .addCase(updateProduct.pending, (state) => {
         state.isLoading = true;
       })

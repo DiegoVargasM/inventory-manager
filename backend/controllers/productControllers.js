@@ -25,6 +25,7 @@ const createProduct = asyncHandler(async (req, res) => {
         folder: "Pinvent App",
         resource_type: "image",
       });
+      console.log(uploadedFile);
     } catch (error) {
       res.status(500);
       throw new Error("Image could not be uploaded");
