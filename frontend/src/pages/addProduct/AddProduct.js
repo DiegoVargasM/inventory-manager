@@ -57,13 +57,11 @@ const AddProduct = () => {
 
   const saveProduct = async (e) => {
     e.preventDefault();
-    let isValid = true;
-
     // validation
+    let isValid = true;
     if (!name || !category || !quantity || !price || !description) {
       isValid = false;
     }
-
     if (!isValid) {
       toast.error("Please fill in all fields");
       return;
