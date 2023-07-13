@@ -7,6 +7,7 @@ import {
   createProduct,
   selectIsLoading,
 } from "../../redux/features/products/productSlice";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -18,24 +19,31 @@ const initialState = {
 const AddProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // normal state
   const [product, setProduct] = useState(initialState);
+  const { name, category, price, quantity } = product;
+
+  // image state
   const [productImage, setProductImage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+
+  // rich text editor state
   const [description, setDescription] = useState("");
 
   // from redux store
   const isLoading = useSelector(selectIsLoading);
-
-  const { name, category, price, quantity } = product;
 
   const handleInputChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
   const handleImageChange = (e) => {
-    // select image
+    // set image
     setProductImage(e.target.files[0]);
-    // preview image
+    // preview image:
+    // .createObjectURL devuelve DOMString que
+    // representa la URL del objeto de archivo
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   };
 
@@ -49,7 +57,19 @@ const AddProduct = () => {
 
   const saveProduct = async (e) => {
     e.preventDefault();
-    // we use formData to be able to pick the image file on the backend
+    let isValid = true;
+
+    // validation
+    if (!name || !category || !quantity || !price || !description) {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    //formData object used to be able to pick the image file on the backend
     const formData = new FormData();
     formData.append("name", name);
     formData.append("sku", generateSKU(category));
@@ -61,8 +81,7 @@ const AddProduct = () => {
 
     console.log(...formData);
 
-    await dispatch(createProduct(formData));
-
+    dispatch(createProduct(formData));
     navigate("/dashboard");
   };
 
