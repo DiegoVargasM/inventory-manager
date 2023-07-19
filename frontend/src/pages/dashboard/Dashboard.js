@@ -11,7 +11,9 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const { products, isLoading, isError, message } = useSelector(
+    // state."slice name"
     (state) => state.product
   );
 

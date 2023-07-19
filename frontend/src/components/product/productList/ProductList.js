@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
+  // before pagination
   const filteredProducts = useSelector(selectFilteredPoducts);
 
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ const ProductList = ({ products, isLoading }) => {
   };
   //   End Pagination
 
+  // anytime the products or search changes, we filter the products
   useEffect(() => {
     dispatch(FILTER_PRODUCTS({ products, search }));
   }, [products, search, dispatch]);
