@@ -2,6 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import productService from "./productService";
 import { toast } from "react-toastify";
 
+// slice => epresents a specific portion of the Redux store state
+// and encapsulates the logic to update that portion of the state
+// in response to dispatched actions
+
 const initialState = {
   product: null,
   products: [],

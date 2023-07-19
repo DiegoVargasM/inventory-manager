@@ -3,6 +3,10 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API_URL = `${BACKEND_URL}/api/products/`;
 
+// service => term used to refer to a module or class that encapsulates
+// the logic for making API requests or interacting with external
+// services in a React application.
+
 // we dont use try catch because we will be calling from async thunks
 
 // Create New Product
